@@ -22,7 +22,7 @@ const StyledContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 70%;
+    width: 100%;
     margin: 1rem 0;
     @media (max-width: 480px) {
       width: 90%;

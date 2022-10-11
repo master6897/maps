@@ -1,14 +1,15 @@
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import styled from "styled-components";
 import Button from "../Shared/Button/Button";
 import PdfGenerator from "../PdfGenerator/PdfGenerator";
+import Modal from "../Shared/Modal/Modal";
 
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 100%;
   padding: 1rem;
   box-sizing: border-box;
   @media (max-width: 480px) {
@@ -23,8 +24,17 @@ const StyledContainer = styled.div`
     @media (max-width: 480px) {
       flex-direction: column;
     }
+    &.title {
+      width: 70%;
+      align-items: flex-start;
+      text-align: left;
+      @media (max-width: 480px) {
+        align-items: flex-start;
+        text-align: left;
+      }
+    }
     &.details {
-      width: 100%;
+      width: 30%;
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
@@ -67,10 +77,18 @@ const StyledContainer = styled.div`
     }
   }
 `;
+
+const StyledPDFViewer = styled(PDFViewer)`
+  width: 80%;
+  height: 90vh;
+  @media (max-width: 1279px) {
+    display: none;
+  }
+`;
 const TripDetails = (props) => {
   return (
     <StyledContainer>
-      <div>
+      <div className="title">
         <label>Costs per kilometer:</label>
         <input
           type="text"
@@ -88,6 +106,20 @@ const TripDetails = (props) => {
           {props.hours} hours {props.minutes} minutes
         </p>
       </div>
+      {+props.price > 0 && (
+        <StyledPDFViewer showToolbar>
+          <PdfGenerator
+            beginAdress={props.beginAdress}
+            destinationAdress={props.destinationAdress}
+            costs={props.costs.toFixed(2)}
+            days={props.days.toFixed(0)}
+            hours={props.hours}
+            minutes={props.minutes}
+            instructions={props.instructions}
+            distance={props.distance}
+          />
+        </StyledPDFViewer>
+      )}
       <div className="buttons">
         {+props.price === 0 ? (
           <Button
@@ -116,7 +148,7 @@ const TripDetails = (props) => {
               loading ? (
                 <Button primary value={"PDF getting ready"} disabled />
               ) : (
-                <Button primary value={"Generate PDF"} />
+                <Button primary value={"Download PDF"} />
               )
             }
           </PDFDownloadLink>
