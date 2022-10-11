@@ -2,8 +2,6 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import styled from "styled-components";
 import Button from "../Shared/Button/Button";
 import PdfGenerator from "../PdfGenerator/PdfGenerator";
-import Modal from "../Shared/Modal/Modal";
-
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
