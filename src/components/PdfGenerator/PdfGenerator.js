@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import {
   Page,
   Text,
@@ -7,6 +8,8 @@ import {
   StyleSheet,
   Font,
 } from "@react-pdf/renderer";
+import { pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const styles = StyleSheet.create({
   body: {
@@ -94,8 +97,10 @@ Font.register({
   src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf",
 });
 const PdfGenerator = (props) => {
+  useEffect(() => {}, [props.costs, props.loaading, props.setLoading]);
+  console.log("wtf");
   return (
-    <Document language="en">
+    <Document language="en" onRender={() => props.setLoading(false)}>
       <Page style={styles.body}>
         <Text style={styles.header}>From: {props.beginAdress}</Text>
         <Text style={styles.header}>To: {props.destinationAdress}</Text>

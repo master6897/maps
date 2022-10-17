@@ -21,7 +21,7 @@ const StyledContainer = styled.div`
     width: 45%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     @media (max-width: 480px) {
       width: 100%;
       &.from {

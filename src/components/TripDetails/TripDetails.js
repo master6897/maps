@@ -2,6 +2,9 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import styled from "styled-components";
 import Button from "../Shared/Button/Button";
 import PdfGenerator from "../PdfGenerator/PdfGenerator";
+import { useState } from "react";
+import Modal from "../Shared/Modal/Modal";
+import { useEffect } from "react";
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,6 +87,13 @@ const StyledPDFViewer = styled(PDFViewer)`
   }
 `;
 const TripDetails = (props) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {}, [loading]);
+
+  useEffect(() => {
+    setLoading(true);
+  }, [props.costs]);
   return (
     <StyledContainer>
       <div className="title">
@@ -104,7 +114,8 @@ const TripDetails = (props) => {
           {props.hours} hours {props.minutes} minutes
         </p>
       </div>
-      {+props.price > 0 && (
+      {+props.price > 0 && loading && <Modal animate />}
+      {!loading && +props.price > 0 && (
         <StyledPDFViewer showToolbar>
           <PdfGenerator
             beginAdress={props.beginAdress}
@@ -115,6 +126,7 @@ const TripDetails = (props) => {
             minutes={props.minutes}
             instructions={props.instructions}
             distance={props.distance}
+            setLoading={setLoading}
           />
         </StyledPDFViewer>
       )}
@@ -138,6 +150,7 @@ const TripDetails = (props) => {
                 minutes={props.minutes}
                 instructions={props.instructions}
                 distance={props.distance}
+                setLoading={setLoading}
               />
             }
             filename="tripDetails.pdf"

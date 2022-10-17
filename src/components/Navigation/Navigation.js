@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ActiveLink from "../Shared/ActiveLink/ActiveLink";
+import { useNavigate } from "react-router-dom";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -14,6 +15,9 @@ const StyledNav = styled.nav`
       font-weight: 600;
       font-size: 1.5rem;
     }
+    &:hover {
+      cursor: pointer;
+    }
   }
   & div.links {
     width: 60%;
@@ -24,9 +28,10 @@ const StyledNav = styled.nav`
 `;
 
 const Navigation = () => {
+  const navigate = useNavigate();
   return (
     <StyledNav>
-      <div className="logo">
+      <div className="logo" onClick={() => navigate("/")}>
         <h1>Maps</h1>
       </div>
       <div className="links">
